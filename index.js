@@ -1,14 +1,54 @@
 function hasTargetSum(array, target) {
+  console.log("array: ", array);
+  console.log("target: ", target);
+
   // Write your algorithm here
+  for (let i = 0; i < array.length; i++) {
+    console.log("i: ", i);
+    console.log("array[i]: ", array[i]);
+
+    // NOTE: The way this works is that you want the 'total' sum goal
+    // Then, you subtract the current element you're looping from so that you can have 'j' look at each of the remaining elements
+    // This is because you know the total, and you know the current element, so whatever is remaining is what you're looking for,
+    // so the other number that 'j' is looking at is what is remaining
+
+    // Very brainy method on how to do this, but I understand it
+    const complement = target - array[i];
+
+    console.log("complement: ", complement);
+
+    for (let j = i + 1; j < array.length; j++) {
+      console.log("j: ", j);
+      console.log("array[j]: ", array[j]);
+      if (array[j] === complement) return true;
+    }
+  }
+
+  return false;
 }
 
-/* 
+/*
   Write the Big O time complexity of your function here
 */
 
-/* 
+// O(4n): this is due to the two variables being passed into the function as well as the two non 'const' variables created within the function itself
+
+/*
   Add your pseudocode here
 */
+
+// Way lengthy and wacky solution is:
+// Look at entire array by using .forEach() loop for cycle through elements
+// Use 'i' and 'j' variables to start at the beginning, and have 'i' equal to i+i so it goes ahead of 'i'
+// Use 'k' and 'l' variables to start at the end, and have 'l' equal to k-1, so it goes before 'l'
+// The only edge cases that are present are what to do if random values within the array itself equal to the 'target' --> This is what I have no idea how to accommodate
+
+// Another possible solution:
+// Sort all of the elements in ascending order --> No reason other than the 'sock' example used in the lessons where its easier to compare elements upon sorting
+// Then, use a variable 'i' cycle through the entire array within one for loop
+// Then, use a second 'j' variable cycle through the entire array within an embedded for loop
+// Add an if statement within the second for loop to do the main comparison logic present to either return true or false
+// This if statement most likely can be just further optimized to only include the if statement to return true
 
 /*
   Add written explanation of your solution here
@@ -29,6 +69,16 @@ if (require.main === module) {
 
   console.log("Expecting: false");
   console.log("=>", hasTargetSum([1, 2, 5], 4));
+
+  console.log("");
+
+  console.log("Expecting: true");
+  console.log("=>", hasTargetSum([1, 2, 3, 4, 5], 15));
+
+  console.log("");
+
+  console.log("Expecting: false");
+  console.log("=>", hasTargetSum([2, 2], 3));
 }
 
 module.exports = hasTargetSum;
